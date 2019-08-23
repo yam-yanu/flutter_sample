@@ -3,7 +3,7 @@
     "family": "Comfortaa",
     "fonts": [
       {
-        "asset": "https://fonts.googleapis.com/css?family=Comfortaa&display=swap"
+        "asset": "fonts/Comfortaa-Regular.ttf"
       }
     ]
   }

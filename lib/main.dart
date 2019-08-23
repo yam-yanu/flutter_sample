@@ -7,11 +7,15 @@ import 'package:flutter_web/material.dart';
 import 'package:english_words/english_words.dart';
 import 'flutter_staggerd_grid_view/widgets/staggered_grid_view.dart';
 import 'flutter_staggerd_grid_view/widgets/staggered_tile.dart';
+import 'ui/templates/general.dart';
+import 'ui/organisms/header.dart' as organismsHeader;
+//import 'ui/organisms/left.dart' as organismsLeft;
+import 'ui/molecules/card_activity.dart';
 
 void main() => runApp(MyApp());
 
 const List<StaggeredTile> tiles = const <StaggeredTile>[
-  const StaggeredTile.count(1, 1.5),
+  const StaggeredTile.count(1, 2),
   const StaggeredTile.count(1, 1),
   const StaggeredTile.count(1, 1.5),
   const StaggeredTile.count(1, 1),
@@ -42,130 +46,106 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'actice',
-      home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Row(
-              children: [
-                Image.asset(
-                  'logo.png',
-                  width: 25,
-                ),
-                SizedBox(
-                  width: 10,
-                ),
-                Text(
-                  'actice',
-                  style: TextStyle(
-                      color: Colors.lightBlue, fontFamily: 'Comfortaa'),
-                )
-              ],
-            ),
-            elevation: 1,
+      home: General(
+        header: organismsHeader.Header(),
+        left_bar: Container(
+          width: 250,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            border: Border(right: BorderSide(color: Colors.black26))
           ),
-          body: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+          child: Column(
+            children: <Widget>[
               Container(
-                width: 250.0,
+                padding: EdgeInsets.all(5),
                 decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border(right: BorderSide(color: Colors.black26))),
+                    border: Border(
+                        bottom: BorderSide(color: Colors.black26))),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    Text('teams'),
+                    TextField(),
                     Container(
-                      padding: EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                          border: Border(
-                              bottom: BorderSide(color: Colors.black26))),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('teams'),
-                          TextField(),
-                          Container(
-                              height: 100,
-                              child: ListView(
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text('hogea'),
-                                  ),
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                ],
-                              )),
-                        ],
-                      ),
-                    ),
+                        height: 100,
+                        child: ListView(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text('hogea'),
+                            ),
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.all(5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text('members'),
+                    TextField(),
                     Container(
-                      padding: EdgeInsets.all(5),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text('members'),
-                          TextField(),
-                          Container(
-                              height: 100,
-                              child: ListView(
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                  ListTile(
-                                    title: Text('hoge'),
-                                  ),
-                                ],
-                              )),
-                        ],
-                      ),
-                    )
+                        height: 100,
+                        child: ListView(
+                          children: <Widget>[
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                            ListTile(
+                              title: Text('hoge'),
+                            ),
+                          ],
+                        )),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        main: Container(
+            color: Colors.white30,
+            child: Column(children: [
+              Container(
+                height: 50,
+                child: Row(
+                  children: <Widget>[
+                    Spacer(),
+                    Text('hife'),
                   ],
                 ),
               ),
               Expanded(
-                child: Container(
-                    color: Colors.white30,
-                    child: Column(children: [
-                      Container(
-                        height: 50,
-                        child: Row(
-                          children: <Widget>[
-                            Spacer(),
-                            Text('hife'),
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                          child: Container(
-                              alignment: Alignment.center,
-                              child: StaggeredGridView.extentBuilder(
-                                maxCrossAxisExtent: 400,
-                                itemCount: tiles.length,
-                                itemBuilder: _getChild,
-                                mainAxisSpacing: 10,
-                                crossAxisSpacing: 20,
-                                padding: EdgeInsets.symmetric(horizontal: 100.0),
-                                staggeredTileBuilder: _getStaggeredTile,
-                              )
-                          )
+                  child: Container(
+                      alignment: Alignment.center,
+                      child: StaggeredGridView.extentBuilder(
+                        maxCrossAxisExtent: 400,
+                        itemCount: tiles.length,
+                        itemBuilder: _getChild,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 20,
+                        padding: EdgeInsets.symmetric(horizontal: 100.0),
+                        staggeredTileBuilder: _getStaggeredTile,
                       )
-                    ])),
-              ),
-            ],
-          )),
+                  )
+              )
+            ])),
+      ),
     );
   }
 
@@ -174,19 +154,7 @@ class MyApp extends StatelessWidget {
   }
 
   Widget _getChild(BuildContext context, int index) {
-    return new Container(
-      padding: EdgeInsets.only(bottom: 5),
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(color: Colors.grey, blurRadius: 5)
-        ],
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      child: new Container(
-        color: Colors.white,
-      ),
-    );
+    return CardActivity();
   }
 }
 
