@@ -15,30 +15,17 @@ import 'ui/molecules/card_activity.dart';
 void main() => runApp(MyApp());
 
 const List<StaggeredTile> tiles = const <StaggeredTile>[
-  const StaggeredTile.count(1, 2),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
-  const StaggeredTile.count(1, 1.5),
-  const StaggeredTile.count(1, 1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
+  const StaggeredTile.fit(1),
 ];
 
 class MyApp extends StatelessWidget {
@@ -119,32 +106,34 @@ class MyApp extends StatelessWidget {
           ),
         ),
         main: Container(
-            color: Colors.white30,
-            child: Column(children: [
-              Container(
-                height: 50,
-                child: Row(
-                  children: <Widget>[
-                    Spacer(),
-                    Text('hife'),
-                  ],
-                ),
+          color: Colors.white30,
+          child: Column(children: [
+            Container(
+              height: 50,
+              child: Row(
+                children: <Widget>[
+                  Spacer(),
+                  Text('hife'),
+                ],
               ),
-              Expanded(
-                  child: Container(
-                      alignment: Alignment.center,
-                      child: StaggeredGridView.extentBuilder(
-                        maxCrossAxisExtent: 400,
-                        itemCount: tiles.length,
-                        itemBuilder: _getChild,
-                        mainAxisSpacing: 10,
-                        crossAxisSpacing: 20,
-                        padding: EdgeInsets.symmetric(horizontal: 100.0),
-                        staggeredTileBuilder: _getStaggeredTile,
-                      )
-                  )
+            ),
+            Expanded(
+              child: Container(
+                width: 900,
+                padding: EdgeInsets.symmetric(horizontal: 30),
+                alignment: Alignment.center,
+                child:
+                StaggeredGridView.extentBuilder(
+                  maxCrossAxisExtent: 300,
+                  itemCount: tiles.length,
+                  itemBuilder: _getChild,
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 20,
+                  staggeredTileBuilder: _getStaggeredTile,
+                )
               )
-            ])),
+            )
+          ])),
       ),
     );
   }
