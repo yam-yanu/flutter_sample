@@ -1,9 +1,18 @@
+import 'package:flutter_sample/model/activity.dart';
+import 'package:flutter_sample/model/skill.dart';
 import 'package:flutter_web/cupertino.dart';
 import 'package:flutter_web/material.dart';
 import 'package:flutter_sample/ui/atoms/skill_tag.dart';
 import 'package:flutter_web/widgets.dart';
 
 class CardActivity extends StatelessWidget {
+
+   const CardActivity({
+     Key key,
+     @required this.activity,
+   }) : super(key: key);
+
+   final Activity activity;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +47,12 @@ class CardActivity extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Text('Yu Yamamoto'),
-                  Text('2019/8/19'),
+                  Text(activity.userMain?.name ?? ''),
+                  // TODO ちゃんとしたtimezone, 表記に直す.
+                  Text(activity.createdAt.toString()),
                 ],)
             ],),
-            Text('hogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehogehoge', textAlign: TextAlign.left,),
+            Text(activity.content, textAlign: TextAlign.left,),
             Container(
               width: double.infinity,
               child:
@@ -50,13 +60,8 @@ class CardActivity extends StatelessWidget {
                 direction: Axis.horizontal,
                 spacing: 5,
                 runSpacing: -10,
-                children: <Widget>[
-                  SkillTag(),
-                  SkillTag(),
-                  SkillTag(),
-                  SkillTag(),
-                ],
-            )
+                children: activity.skillNeeds.map((Skill skill) => SkillTag(skill)).toList(),
+              ),
             ),
           ],
         ),

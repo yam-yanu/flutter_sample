@@ -2,31 +2,27 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+import 'package:flutter_sample/bloc/activity.dart';
 import 'package:flutter_web/cupertino.dart';
 import 'package:flutter_web/material.dart';
-import 'package:english_words/english_words.dart';
 import 'flutter_staggerd_grid_view/widgets/staggered_grid_view.dart';
 import 'flutter_staggerd_grid_view/widgets/staggered_tile.dart';
 import 'ui/templates/general.dart';
 import 'ui/organisms/header.dart' as organismsHeader;
-//import 'ui/organisms/left.dart' as organismsLeft;
 import 'ui/molecules/card_activity.dart';
+import 'package:firebase/firebase.dart';
+import 'package:flutter_sample/model/activity.dart';
 
-void main() => runApp(MyApp());
-
-const List<StaggeredTile> tiles = const <StaggeredTile>[
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-  const StaggeredTile.fit(1),
-];
+void main() {
+  initializeApp(
+    // TODO ここをうまく入れ込む方法を考える
+    apiKey: '',
+    databaseURL: '',
+    projectId: '',
+    storageBucket: '',
+  );
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   @override
@@ -122,67 +118,36 @@ class MyApp extends StatelessWidget {
                 width: 900,
                 padding: EdgeInsets.symmetric(horizontal: 30),
                 alignment: Alignment.center,
-                child:
-                StaggeredGridView.extentBuilder(
-                  maxCrossAxisExtent: 300,
-                  itemCount: tiles.length,
-                  itemBuilder: _getChild,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 20,
-                  staggeredTileBuilder: _getStaggeredTile,
-                )
+                child: _buildBody(context)
               )
-            )
-          ])),
+            ),
+          ]),
+        ),
       ),
     );
   }
 
-  StaggeredTile _getStaggeredTile(int i) {
-    return i >= tiles.length ? null : tiles[i];
-  }
+   Widget _buildBody(BuildContext context) {
+     return StreamBuilder<List<Activity>>(
+       stream: ActivityBloc().activities,
+       builder: (context, AsyncSnapshot<List<Activity>> snapshot) {
+         if (!snapshot.hasData) return LinearProgressIndicator();
+         return _buildStaggeredGridView(context, snapshot.data);
+       },
+     );
+   }
 
-  Widget _getChild(BuildContext context, int index) {
-    return CardActivity();
-  }
-}
+   Widget _buildStaggeredGridView(BuildContext context, List<Activity> activities) {
+     return StaggeredGridView.extentBuilder(
+       maxCrossAxisExtent: 300,
+       itemCount: activities.length,
+       itemBuilder: (ContextAttributes, index) {
+         return CardActivity(activity: activities[index]);
+       },
+       mainAxisSpacing: 10,
+       crossAxisSpacing: 20,
+       staggeredTileBuilder: (index) => StaggeredTile.fit(1),
+     );
+   }
 
-class RandomWordsState extends State<RandomWords> {
-  final _suggestions = <WordPair>[];
-  final _biggerFont = const TextStyle(fontSize: 18.0);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _buildSuggestions(),
-    );
-  }
-
-  Widget _buildSuggestions() {
-    return ListView.builder(
-        padding: const EdgeInsets.all(16.0),
-        itemBuilder: /*1*/ (context, i) {
-          if (i.isOdd) return Divider(); /*2*/
-
-          final index = i ~/ 2; /*3*/
-          if (index >= _suggestions.length) {
-            _suggestions.addAll(generateWordPairs().take(10)); /*4*/
-          }
-          return _buildRow(_suggestions[index]);
-        });
-  }
-
-  Widget _buildRow(WordPair pair) {
-    return ListTile(
-      title: Text(
-        pair.asPascalCase,
-        style: _biggerFont,
-      ),
-    );
-  }
-}
-
-class RandomWords extends StatefulWidget {
-  @override
-  RandomWordsState createState() => RandomWordsState();
 }
